@@ -2,7 +2,8 @@ package java2.animals;
 
 import java.util.Date;
 
-public class Animal {
+// abstract classes - cannot be instantiated
+public abstract class Animal {
     public float mass;
     private String foodSource;
     private String species;
@@ -20,10 +21,15 @@ public class Animal {
     }
 
     public int getAgeInYears() {
-        // calculate the age of the animal
-        return dateOfBirth.getYear();
+        // TODO: calculate the age of the animal
+        return 3;
     }
 
     public String getSpecies() { return this.species; }
 
+    public String toString() {
+        return this.species + ", born: " + this.dateOfBirth.toString() + ", mass: " + this.mass + "kg";
+    }
+
+    public abstract void speak();
 }
