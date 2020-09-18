@@ -11,12 +11,13 @@ class ABC {
 }
 
 public class Test {
-    class DEF {
+    static class DEF {
         // inner class (not really used in this course)
     }
 
     public static void main(String[] args) {
         ABC abc = new ABC();
+        DEF def = new DEF();
 
         TaylorSeriesLambda lambda = new TaylorSeriesLambda();
         long f = lambda.factorial(10);
