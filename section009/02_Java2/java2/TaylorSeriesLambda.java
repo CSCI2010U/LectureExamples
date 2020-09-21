@@ -42,10 +42,17 @@ public class TaylorSeriesLambda {
         System.out.printf("sin(%f) == %f\n", x, f3.doIt(x));
         System.out.printf("sin(%f) == %f\n", x, f5.doIt(x));
 
-        Animal untitled = new Animal("Glenda", "Canada Goose", "female", 2);
-        System.out.println(untitled.getName());
-        System.out.println(untitled.numLegs);
-        System.out.println(untitled.getAgeInYears());
-        
+        Animal untitled = new CanadaGoose("Glenda", "female");
+        // System.out.println(untitled.getName());
+        // System.out.println(untitled.numLegs);
+        // System.out.println(untitled.getAgeInYears());
+        System.out.println(untitled);
+        untitled.speak();
+        // untitled.attackStudent(); // can't execute on an animal variable
+
+        Mongoose mandy = new Mongoose("Mandy", "female");
+        System.out.println(mandy);
+        mandy.speak();
+        mandy.eatSnake();
     }
 }

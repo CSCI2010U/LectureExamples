@@ -1,6 +1,9 @@
 package java2.animalKingdom;
 
-public class Animal {
+// parent class:  Object (default)
+
+// abstract class - cannot instantiate it
+public abstract class Animal {
     private String sex;
     private String name;
     private long dateOfBirth;
@@ -18,10 +21,16 @@ public class Animal {
         numLegs = numberOfLegs;
     }
 
-    public int getAgeInYears() {
-        // subtract birth date from the current date
+    public int getAgeInYears()  {
+        // TODO: subtract birth date from the current date
         return 1;
     }
 
     public String getName() { return name; }
+
+    public abstract void speak();
+
+    public String toString() {
+        return this.name + " (" + this.species + ")";
+    }
 }
