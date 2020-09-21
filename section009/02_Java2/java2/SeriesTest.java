@@ -40,6 +40,5 @@ public class SeriesTest {
         for (int i = 0; i < 5; i++) {
             System.out.printf("%.3f (sum: %.3f)\n", harmonic3.nextValue(), harmonic3.sumSoFar());
         }
-
     }
 }
