@@ -34,6 +34,7 @@ public class TaylorSeriesLambda {
         long f = lambda.factorial(10);
 
         // x - x**3 / 3! + x**5 / 5! - x**7 / 7! + x**9 / 9! - x**11 / 11! + x**13 / 13!
+        // using lambda notation
         UnaryFunction f1 = (double x) -> { return x; };
         UnaryFunction f3 = (double x) -> { return x - lambda.pow(x,3) / lambda.factorial(3); };
         UnaryFunction f5 = (double x) -> { return x - lambda.pow(x,3) / lambda.factorial(3) + lambda.pow(x,5) / lambda.factorial(5); };
