@@ -28,14 +28,24 @@ public class LinearSearch {
         return values;
     }
 
-    public static int linearSearch(int[] values, int toFind) {
-        for (int i = 0; i < values.length; i++) {
-            if (values[i] == toFind) {
-                return i;
+    public static int linearSearch(int[] values, int toFind) {  // best case performance
+        for (int i = 0; i < values.length; i++) {               // 2 ops + (2 ops * 1 iteration)
+            if (values[i] == toFind) {                              // 2 operations
+                return i;                                           // 1 operation? yes
             }
         }
-        return -1; // not found
-    }
+        return -1; // not found                                 // 2 operations
+    }                                               // TOTAL:      7 = O(1) (constant)
+
+    public static int linearSearch2(int[] values, int toFind) { // worst case performance (not in list)
+        for (int i = 0; i < values.length; i++) {               // 2 ops + (2 ops * n iterations)
+            if (values[i] == toFind) {                              // 2 operations
+                return i;                                           // 1 operation? no
+            }
+        }
+        return -1; // not found                                 // 2 operations
+    }                                               // TOTAL:      4n + 4 = O(n) (linear)
+
 
     public static int binarySearch(int[] values, int toFind) {
         return binarySearch(values, toFind, 0, values.length - 1);
