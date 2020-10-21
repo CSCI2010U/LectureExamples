@@ -18,7 +18,7 @@ public class Power {
     // 2 ^ 3 = ((2 ^ 1) ^ 2 * 2)
     // (2 ^ 2 * 2) ^ 2
 
-    // T(n) = T(n/2) + O(1) = O(log n)
+    // T(n) = T(n / 2) + O(1) = O(log n)
     public static float power(float x, int n) {
         if (n == 0) {
             return 1;

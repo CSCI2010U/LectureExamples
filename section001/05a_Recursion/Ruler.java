@@ -7,7 +7,7 @@ public class Ruler {
         }
     }
 
-    // binary recursion
+    // binary recursion (two recursive calls)
     public static void drawInterval(int centreLength) {
         if (centreLength >= 1) {
             drawInterval(centreLength - 1);
