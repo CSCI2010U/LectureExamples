@@ -11,6 +11,7 @@ public class BinarySearch {
     // actual binary search implementation
     // T(n) = k lg n + c
     // n - number of elements in the list
+    // linear/tail recursion
     public static boolean binarySearch(int[] data, int toFind, int startIndex, int endIndex) {
         // no elements left to search
         if (endIndex < startIndex) {                                                // O(1)
