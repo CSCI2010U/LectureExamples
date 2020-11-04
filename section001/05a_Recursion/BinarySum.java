@@ -1,6 +1,12 @@
 // binary recursion (two recursive calls)
 public class BinarySum {
     public static int binarySum(int[] array, int startIndex, int numElements, int depth) {
+        // the depth param and this code are just for illustrating the recursive calls
+        for (int i = 0 ; i < depth; i++) {
+            System.out.print("\t");
+        }
+        System.out.printf("binarySum(array, %d, %d)\n", startIndex, numElements);
+
         if (numElements == 1) {
             return array[startIndex];
         }
