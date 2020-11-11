@@ -17,13 +17,24 @@ public class BSTNode {
                 left = newNode;
             } else {
                 // there is already a left child, so
-                // ask that node to insert the value
+                // ask the left node to insert the value
                 left.insert(value);
             }
         } else { // value >= this.value
             // add this value to the right sub-tree
 
-            // TODO: Do the same that we did for the left sub-tree, above
+            if (this.right == null) {
+                // there is currently no right child, so
+                // make this new node the right child
+                BSTNode newNode = new BSTNode();
+                newNode.value = value;
+                newNode.parent = this;
+                this.right = newNode;
+            } else {
+                // there is already a right child, so
+                // ask the right node to insert the value
+                this.right.insert(value);
+            }
         }
     }
 
@@ -45,5 +56,33 @@ public class BSTNode {
         if (left != null) {
             left.print(depth + 1);
         }
+    }
+
+    public int getHeight() {
+        int leftHeight = 0;
+        if (this.left != null) {
+            leftHeight = this.left.getHeight();
+        }
+
+        int rightHeight = 0;
+        if (this.right != null) {
+            rightHeight = this.right.getHeight();
+        }
+
+        return (leftHeight > rightHeight) ? leftHeight + 1 : rightHeight + 1;
+    }
+
+    public int getBalance() {
+        int leftHeight = 0;
+        if (this.left != null) {
+            leftHeight = this.left.getHeight();
+        }
+
+        int rightHeight = 0;
+        if (this.right != null) {
+            rightHeight = this.right.getHeight();
+        }
+        
+        return leftHeight - rightHeight;
     }
 }
