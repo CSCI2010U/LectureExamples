@@ -82,7 +82,7 @@ public class BSTNode {
         if (this.right != null) {
             rightHeight = this.right.getHeight();
         }
-        
+
         return leftHeight - rightHeight;
     }
 }
