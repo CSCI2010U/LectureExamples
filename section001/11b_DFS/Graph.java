@@ -62,7 +62,34 @@ public class Graph {
       return vertices.get(label);
    }
 
-   // DFS code goes here
+   // DFS code
+   public Set<Vertex> visited;
+   public Map<Vertex,Edge> discoveryEdges;
+
+   public void dfs(String startVertexLabel) {
+      // convenience function for the main() method
+      visited = new HashSet<>();
+      discoveryEdges = new HashMap<>();
+
+      Vertex startVertex = this.vertices.get(startVertexLabel);
+      this.dfs(startVertex);
+   }
+
+   private void dfs(Vertex u) {
+      // mark the start vertex as visited
+      visited.add(u);
+
+      List<Vertex> adjacencies = u.getAdjacencies();
+      for (Vertex v: adjacencies) {
+         if (!visited.contains(v)) {
+            // record the edge (u,v) as the discovery edge for v
+            this.discoveryEdges.put(v, new Edge(u, v));
+
+            // recursively DFS on u
+            dfs(v);
+         }
+      }
+   }
 
    public static void main(String[] args) {
       Graph graph = new Graph();
@@ -93,6 +120,23 @@ public class Graph {
          System.out.println("");
       }
 
-      // test code for DFS goes here
+      // test code for DFS
+      graph.dfs("C");
+
+      System.out.println("Visited vertices:");
+      for (Vertex v: graph.visited) {
+         System.out.printf("\t%s\n", v.getLabel());
+      }
+
+      System.out.println("Discovery edges:");
+      for (Vertex v: graph.discoveryEdges.keySet()) {
+         Edge e = graph.discoveryEdges.get(v);
+         System.out.printf(
+            "\tVertex %s discovered by edge (%s,%s)\n",
+            v.getLabel(),
+            e.getVertex1().getLabel(),
+            e.getVertex2().getLabel()
+         );
+      }
    }
 }
