@@ -23,6 +23,8 @@ public class Graph {
       public int getDegree() {
          return adjacencies.size();
       }
+
+      public String toString() { return label; }
    }
 
    private class Edge {
@@ -62,7 +64,38 @@ public class Graph {
       return vertices.get(label);
    }
 
-   // DFS code goes here
+   // DFS code
+   public Set<Vertex> visited;
+   public Map<Vertex, Edge> discoveryEdges;
+
+   public void dfs(String startVertexLabel) {
+      // label all vertices as unvisited (empty visited set)
+      visited = new HashSet<>();
+
+      // label all edges as undiscovered (empty discovery edge map)
+      discoveryEdges = new HashMap<>();
+
+      Vertex startVertex = vertices.get(startVertexLabel);
+      dfs(startVertex);
+   }
+
+   private void dfs(Vertex u) {
+      // mark u as visited
+      visited.add(u);
+
+      // loop over the adjacencies of u
+      List<Vertex> adjacencies = u.getAdjacencies();
+      for (Vertex v : adjacencies) {
+         // check if v has been visited
+         if (!visited.contains(v)) {
+            // mark the edge as a discovery edge for v
+            discoveryEdges.put(v, new Edge(u, v));
+
+            // recursively DFS on v
+            dfs(v);
+         }
+      }
+   }
 
    public static void main(String[] args) {
       Graph graph = new Graph();
@@ -93,6 +126,25 @@ public class Graph {
          System.out.println("");
       }
 
-      // test code for DFS goes here
+      // test code for DFS
+      graph.dfs("D");
+
+      // print the visited vertices
+      System.out.println("Visited vertices:");
+      for (Vertex v : graph.visited) {
+         System.out.printf("\t%s\n", v.getLabel());
+      }
+
+      // print the discovery edges
+      System.out.println("Discovery edges:");
+      for (Vertex v : graph.discoveryEdges.keySet()) {
+         Edge edge = graph.discoveryEdges.get(v);
+         System.out.printf(
+            "\tVertex %s, discovered by edge (%s,%s)\n",
+            v.toString(),
+            edge.getVertex1().toString(),
+            edge.getVertex2().toString()
+         );
+      }
    }
 }
