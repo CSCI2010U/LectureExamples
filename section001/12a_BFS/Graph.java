@@ -1,11 +1,14 @@
 // CSCI 2010U - 12a Breadth-first Search
 
 import java.util.*;
+import java.util.concurrent.*;
 
 public class Graph {
    private class Vertex {
       private String label;
       private List<Vertex> adjacencies;
+      private boolean visited = false;
+      private Vertex parent = null; // vertex whose edge discovered us
 
       public Vertex(String label) {
          this.label = label;
@@ -23,6 +26,12 @@ public class Graph {
       public int getDegree() {
          return adjacencies.size();
       }
+
+      public boolean isVisited() { return this.visited; }
+      public void labelVisited() { this.visited = true; }
+
+      public Vertex getParent() { return this.parent; }
+      public void setParent(Vertex parent) { this.parent = parent; }
    }
 
    private class Edge {
@@ -62,7 +71,36 @@ public class Graph {
       return vertices.get(label);
    }
 
-   // BFS code goes here
+   // BFS code
+   public Vertex bfs(String startVertexLabel, String goalVertexLabel) throws InterruptedException {
+      Vertex startVertex = this.vertices.get(startVertexLabel);
+      startVertex.labelVisited();
+      startVertex.setParent(null);
+
+      LinkedBlockingQueue<Vertex> queue = new LinkedBlockingQueue<>();
+      queue.put(startVertex);
+
+      while (queue.size() > 0) {
+         Vertex v = queue.remove();
+
+         // check if this is the goal vertex
+         if (v.getLabel() == goalVertexLabel) {
+            return v;
+         }
+
+         // search the adjacencies of v
+         List<Vertex> adjacencies = v.getAdjacencies();
+         for (Vertex w: adjacencies) {
+            if (!w.isVisited()) {
+               w.labelVisited();
+               w.setParent(v);
+               queue.put(w);
+            }
+         }
+      }
+
+      return null;
+   }
 
    public static void main(String[] args) {
       Graph graph = new Graph();
@@ -93,6 +131,19 @@ public class Graph {
          System.out.println("");
       }
 
-      // test code for BFS goes here
+      // test code for BFS
+      try {
+         Vertex destination = graph.bfs("A", "E");
+         if (destination == null) {
+            System.out.println("no path from A to E");
+         } else {
+            while (destination != null) {
+               System.out.print(destination.getLabel() + " <- ");
+               destination = destination.getParent();
+            }
+         }
+      } catch (InterruptedException e) {
+         e.printStackTrace();
+      }
    }
 }
