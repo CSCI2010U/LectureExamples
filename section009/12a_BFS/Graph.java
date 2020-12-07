@@ -1,11 +1,14 @@
 // CSCI 2010U - 12a Breadth-first Search
 
 import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Graph {
    private class Vertex {
       private String label;
       private List<Vertex> adjacencies;
+      private boolean visited = false;
+      private Vertex parent = null;
 
       public Vertex(String label) {
          this.label = label;
@@ -23,6 +26,12 @@ public class Graph {
       public int getDegree() {
          return adjacencies.size();
       }
+
+      public void labelVisited() { this.visited = true; }
+      public boolean isVisited() { return visited; }
+
+      public Vertex getParent() { return this.parent; }
+      public void setParent(Vertex newParent) { this.parent = newParent; }
    }
 
    private class Edge {
@@ -62,7 +71,41 @@ public class Graph {
       return vertices.get(label);
    }
 
-   // BFS code goes here
+   // BFS code
+   public Vertex bfs(String startVertexLabel, String destVertexLabel) throws InterruptedException {
+      Vertex startVertex = this.vertices.get(startVertexLabel);
+      startVertex.setParent(null);
+      startVertex.labelVisited();
+
+      LinkedBlockingQueue<Vertex> queue = new LinkedBlockingQueue<>();
+      queue.put(startVertex);
+
+      while (queue.size() > 0) {
+         Vertex v = queue.remove();
+
+         // check if we've reached the destination vertex
+         if (v.getLabel() == destVertexLabel) {
+            return v;
+         }
+
+         // process the adjacencies of v
+         List<Vertex> adjacencies = v.getAdjacencies();
+         for (Vertex w: adjacencies) {
+            if (!w.isVisited()) {
+               // remember the discovery edge
+               w.setParent(v);
+
+               // mark w as visited
+               w.labelVisited();
+
+               // add w to the queue
+               queue.put(w);
+            }
+         }
+      }
+
+      return null;
+   }
 
    public static void main(String[] args) {
       Graph graph = new Graph();
@@ -72,6 +115,7 @@ public class Graph {
       graph.addVertex("C");
       graph.addVertex("D");
       graph.addVertex("E");
+      graph.addVertex("F");
 
       graph.addEdge("A", "B");
       graph.addEdge("A", "C");
@@ -93,6 +137,20 @@ public class Graph {
          System.out.println("");
       }
 
-      // test code for BFS goes here
+      // test code for BFS
+      try {
+         System.out.println("Testing BFS:");
+         Vertex current = graph.bfs("E", "F");
+         if (current == null) {
+            System.out.println("No path found.");
+         } else {
+            while (current != null) {
+               System.out.print(current.getLabel() + " <- ");
+               current = current.getParent();
+            }
+         }
+      } catch (InterruptedException e) {
+         e.printStackTrace();
+      }
    }
 }
